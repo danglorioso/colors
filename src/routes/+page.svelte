@@ -14,9 +14,10 @@
 </script>
 
 <main
-  class="min-h-screen bg-slate-900 text-white flex items-center justify-center"
+  class="min-h-screen bg-slate-900 text-white flex flex-cols items-center gap-x-20 justify-center"
 >
   <div class="space-y-4 w-80">
+    <h1 class="text-3xl font-bold">Tailwind Color Match</h1>
     <input
       bind:value={input}
       placeholder="Input hex, RGB, HSL, or LAB color"
@@ -29,9 +30,18 @@
     >
       Convert
     </button>
+  </div>
 
+  <div class="flex flex-col space-y-2">
     {#each results as r}
-      <div class="text-sm text-emerald-400">
+      <div class="text-sm text-emerald-400 font-mono border-l-40 pl-2"
+      style="
+        border-left-color: oklch(
+          {r.color.l * 100}% 
+          {r.color.c} 
+          {r.color.h}
+        );
+      ">
         {r.name} — Δ {r.distance.toFixed(3)}
       </div>
     {/each}
