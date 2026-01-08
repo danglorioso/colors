@@ -28,13 +28,28 @@
       target_oklch = '';
     }
   }
+
+  function copy(text: string) {
+    navigator.clipboard.writeText(text);
+  }
+
 </script>
+
+<svelte:head>
+  <title>Tailwind CSS Color Matcher</title>
+  <meta name="description" content="Find closest Tailwind colors to any input color using Euclidean distance in OKLCH space." />
+    <meta property="og:title" content="Tailwind CSS Color Matcher" />
+</svelte:head>
 
 <main
   class="min-h-screen bg-slate-900 text-white flex flex-cols items-center gap-x-20 justify-center"
 >
   <div class="space-y-4 w-80">
-    <h1 class="text-3xl font-bold">Tailwind Color Match</h1>
+    <div>
+      <h1 class="text-3xl font-bold mb-1">Tailwind Color Match</h1>
+      <p class="text-sm text-stone-400 mb-6">Find closest Tailwind colors to any input color using Euclidean distance in OKLCH space.</p>
+    </div>
+
     <input
       bind:value={input}
       placeholder="Input hex, RGB, HSL, or LAB color"
@@ -62,15 +77,24 @@
 
     <h2>Closest Results:</h2>
     {#each results as r}
-      <div class="text-sm text-emerald-400 font-mono border-l-40 pl-2"
-      style="
-        border-left-color: oklch(
-          {r.color.l * 100}% 
-          {r.color.c} 
-          {r.color.h}
-        );
-      ">
-        {r.name} — Δ {r.distance.toFixed(3)}
+      <div
+        class="flex items-center gap-2 text-sm font-mono border-l-25 pl-2 pr-2 py-1 rounded group"
+        style="
+          border-left-color: oklch({r.color.l * 100}% {r.color.c} {r.color.h});
+          background-color: oklch({r.color.l * 100}% {r.color.c} {r.color.h} / 0.10);
+        "
+      >
+        <span class="flex-1">
+          {r.name} — Δ {r.distance.toFixed(3)}
+        </span>
+
+        <button
+          class="opacity-0 group-hover:opacity-100 transition text-xs px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700"
+          on:click={() => copy(`${r.name}`)}
+          title="Copy Tailwind class"
+        >
+          copy
+        </button>
       </div>
     {/each}
   </div>
