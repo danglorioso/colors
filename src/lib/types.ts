@@ -1,7 +1,7 @@
 export type OKLCH = {
-  l: number; // 0–1
-  c: number; // 0+
-  h: number; // 0–360
+  l: number;
+  c: number;
+  h: number;
 };
 
 export type MatchResult = {
