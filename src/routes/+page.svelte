@@ -74,4 +74,28 @@
       </div>
     {/each}
   </div>
-</main>
+ </main>
+
+<footer class="absolute bottom-0 w-full bg-slate-900 border-t border-white/10 mt-auto">
+  <div class="max-w-6xl mx-auto px-6 py-4">
+    <div class="flex flex-col items-center space-y-4">
+      <!-- Main content -->
+      <div class="text-center">
+        <p class="text-white text-sm md:text-base mb-1">
+          Created by
+          <a
+            href="https://danglorioso.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-white hover:text-yellow-200 font-medium transition-colors duration-300 underline decoration-white/60 hover:decoration-yellow-200 underline-offset-2"
+          >
+            Dan Glorioso
+          </a>.
+        </p>
+        <p class="text-white/80 text-xs">
+          © {new Date().getFullYear()} All rights reserved
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
