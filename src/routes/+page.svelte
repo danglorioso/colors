@@ -1,14 +1,31 @@
 <script lang="ts">
   import { findClosest } from "$lib/color/match";
+  import { toOKLCHString } from "../lib/color/convert";
+
 
   let input = $state("");
   let results = $state([]);
+  let target_oklch = $state("oklch(50% 0 0)");
+
+  function oklchToString(c) {
+    if (!c || typeof c !== 'object' || c.l === undefined) return '';
+    // Clamp values for safety
+    const l = Math.max(0, Math.min(1, c.l)) * 100;
+    const cVal = c.c ?? 0;
+    const h = c.h ?? 0;
+    return `oklch(${l}% ${cVal} ${h})`;
+  }
 
   function run() {
     try {
+      // Array of Tailwnind colors closest to input
       results = findClosest(input, 5);
+
+      // Input color in OKLCH format as string
+      target_oklch = toOKLCHString(input);
     } catch {
       results = [];
+      target_oklch = '';
     }
   }
 </script>
@@ -32,7 +49,18 @@
     </button>
   </div>
 
+  <!-- Right column  -->
   <div class="flex flex-col space-y-2">
+    <h1 class="text-2xl font-bold">Results</h1>
+
+    <h2>Input Color:</h2>
+    <!-- Block of input color -->
+    <div
+      class="w-20 h-20 border"
+      style="background-color: {target_oklch};"
+    ></div>
+
+    <h2>Closest Results:</h2>
     {#each results as r}
       <div class="text-sm text-emerald-400 font-mono border-l-40 pl-2"
       style="

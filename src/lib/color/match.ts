@@ -5,14 +5,14 @@ import type { MatchResult } from "../types";
 
 export function findClosest(input: string, limit = 3): MatchResult[] {
 // Convert input color to OKLCH
-  const target = toOKLCH(input);
+  const oklch_target = toOKLCH(input);
 
   // Compute distances to all Tailwind colors and sort by distance
   return Object.entries(tailwindColors)
     .map(([name, color]) => ({
       name,
       color,
-      distance: oklchDistance(target, color),
+      distance: oklchDistance(oklch_target, color),
     }))
     .sort((a, b) => a.distance - b.distance)
     .slice(0, limit);
